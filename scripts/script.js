@@ -4,15 +4,13 @@ var ctx = can.getContext("2d");
 
 var angle = 0, outer_angle = 0;
 var points = [];
-var rand = Math.random();
 var settings = {
     "total particles": 200,
-    "total circles": 8,
+    "total circles": 5,
     "outer radius": 200,
     "inner radius": 50,
-    rand: Math.random(),
-    "point 1 delay": rand * 15.0,
-    "point 2 delay": rand * 15.0,
+    "point 1 delay": 100.0,
+    "point 2 delay": 0.0,
 };
 var settings_copy = {};
 function resize() {
@@ -40,10 +38,10 @@ function setup() {
     }
 }
 function dgui() {
-
     var gui = new dat.GUI();
     gui.add(settings, 'total circles', 2, 10).step(1);
     gui.add(settings, 'outer radius', 0, 300);
+    gui.add(settings, 'inner radius', 0, 100);
     gui.add(settings, "point 1 delay", 0, 100);
     gui.add(settings, "point 2 delay", 0, 100);
 }

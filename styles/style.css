@@ -5,3 +5,17 @@ body,html{
 canvas{
     display:block;
 }
+.links{
+    position:fixed;
+    right:0;
+    bottom:0;
+    width:100px;
+    height:30px;
+    line-height:30px;
+    background:#222;
+    text-align:center;
+}
+.link{
+    text-decoration:none;
+    color:#fff;
+}
