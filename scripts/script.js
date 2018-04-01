@@ -5,6 +5,12 @@ const radius = 50;
 
 var angle = 0, angle1 = 0;
 
+var settings = {
+    "total particles": 500,
+    a: { constant: 1.0 },
+    b: { constant: 1.0 }
+};
+
 function resize() {
     can.width = window.innerWidth;
     can.height = window.innerHeight;
@@ -44,19 +50,19 @@ function draw() {
 
     ctx.closePath();
     ctx.fill();
-    var total = 100;
+    var total = settings["total particles"];
     for (var i = 0; i < total; ++i) {
         ctx.beginPath();
         var between = i / total;
         var temp = {
             x: lerp(
-                x(can.width * 0.25, angle * (1 - between)),
-                x(can.width * 0.75, angle1 * between),
+                x(can.width * 0.25, angle - between * settings.a.constant),
+                x(can.width * 0.75, angle1 - (1 - between) * settings.b.constant),
                 between
             ),
             y: lerp(
-                y(can.height / 2, angle * (1 - between)),
-                y(can.height / 2, angle1 * between),
+                y(can.height / 2, angle - between * settings.a.constant),
+                y(can.height / 2, angle1 - (1 - between) * settings.b.constant),
                 between
             )
         };
@@ -67,7 +73,7 @@ function draw() {
 
 
     angle += Math.PI / 60;
-    angle1 -= Math.PI / 60;
+    angle1 += Math.PI / 60;
     requestAnimationFrame(draw);
 }
 window.onresize = resize;
