@@ -11,8 +11,8 @@ var settings = {
     "outer radius": 200,
     "inner radius": 50,
     rand: Math.random(),
-    a: { constant: rand * 15.0 },
-    b: { constant: rand * 15.0 }
+    "point 1 delay": rand * 15.0,
+    "point 2 delay": rand * 15.0,
 };
 var settings_copy = {};
 function resize() {
@@ -38,6 +38,14 @@ function setup() {
             angle: Math.random() * Math.PI * 2
         });
     }
+}
+function dgui() {
+
+    var gui = new dat.GUI();
+    gui.add(settings, 'total circles', 2, 10).step(1);
+    gui.add(settings, 'outer radius', 0, 300);
+    gui.add(settings, "point 1 delay", 0, 100);
+    gui.add(settings, "point 2 delay", 0, 100);
 }
 function draw() {
     ctx.fillStyle = "#000";
@@ -84,19 +92,19 @@ function draw() {
             var between = j / total;
             var temp = {
                 x: lerp(
-                    x(point.x, points[i].angle - between * settings.a.constant),
-                    x(point1.x, points[(i + 1) % circles].angle - (1 - between) * settings.b.constant),
+                    x(point.x, points[i].angle - between * settings['point 1 delay']),
+                    x(point1.x, points[(i + 1) % circles].angle - (1 - between) * settings['point 2 delay']),
                     between
                 ),
                 y: lerp(
-                    y(point.y, points[i].angle - between * settings.a.constant),
-                    y(point1.y, points[(i + 1) % circles].angle - (1 - between) * settings.b.constant),
+                    y(point.y, points[i].angle - between * settings['point 1 delay']),
+                    y(point1.y, points[(i + 1) % circles].angle - (1 - between) * settings['point 2 delay']),
                     between
                 )
             };
             ctx.arc(temp.x, temp.y, 1, 0, Math.PI * 2);
-            ctx.fill();
             ctx.closePath();
+            ctx.fill();
         }
     }
 
@@ -109,4 +117,5 @@ function draw() {
 }
 window.onresize = resize;
 resize();
+dgui();
 draw();
